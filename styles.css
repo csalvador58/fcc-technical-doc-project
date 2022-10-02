@@ -1,0 +1,15 @@
+img {
+    width: 100px
+}
+
+#navbar {
+    background-color:midnightblue;
+    display: block;
+    width: 300px;
+    border-radius: 5px;
+}
+
+#nav-header {
+    font-size: x-large;
+    color: whitesmoke;
+}
