@@ -1,3 +1,7 @@
+body {
+    display: flex;
+}
+
 img {
     width: 80px
 }
@@ -8,7 +12,30 @@ li {
 
 ul {
     list-style-type: none;
-    color: whitesmoke;
+    
+}
+
+ul.with-style {
+    list-style-type: circle;
+}
+
+.code-label {
+    font-style: italic;
+    text-align: center;
+}
+
+.main-section header{
+    font-size: x-large;
+    font-weight: bold;
+    margin: 0;
+    padding: 20px 0;
+}
+
+.tab { 
+    margin-left: 40px; 
+}
+#main-doc {
+    padding: 20px;
 }
 
 #navbar {
