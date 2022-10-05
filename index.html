@@ -20,19 +20,19 @@
                 <a class="nav-link" href="#Importing">Importing</a>
             </li>
             <li>
-                <a class="nav-link" href="#Common Terminology">Common Terminology</a>
+                <a class="nav-link" href="#Common_Terminology">Common Terminology</a>
             </li>
             <li>
-                <a class="nav-link" href="#Connecting to Ethereum: Metamask">Connecting to Ethereum: Metamask</a>
+                <a class="nav-link" href="#Connecting_to_Ethereum:_Metamask">Connecting to Ethereum: Metamask</a>
             </li>
             <li>
-                <a class="nav-link" href="#Connecting to Etheruem: RPC">Connecting to Ethereum: RPC</a>
+                <a class="nav-link" href="#Connecting_to_Ethereum:_RPC">Connecting to Ethereum: RPC</a>
             </li>
             <li>
                 <a class="nav-link" href="#Contracts">Contracts</a>
             </li>
             <li>
-                <a class="nav-link" href="#Signing Messages">Signing Messages</a>
+                <a class="nav-link" href="#Signing_Messages">Signing Messages</a>
             </li>
         </ul>
 
@@ -40,15 +40,15 @@
     <main id="main-doc">
         <section class="main-section" id="Installing">
             <header>Installing</header>
-            <article>
+            <div>
                 <p>Ethers' various Classes and Functions are available to import manually from sub-packages under the @ethersproject organization but for most projects, the umbrella package is the easiest way to get started.</p>
                 <code>/home/ricmoo> npm install --save ethers</code>
-            </article>
+            </div>
         </section>
-
+        <hr>
         <section class="main-section" id="Importing">
             <header>Importing</header>
-            <article>
+            <div>
                 <h1>Node.js</h1>
                 <p class="code-label">node.js require</p>
                 <code>const { ethers } = require("ethers");</code>
@@ -70,10 +70,10 @@
                     &lt;script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
         type="application/javascript"&gt;&lt;/script&gt;
                 </code>
-            </article>
+            </div>
         </section>
-
-        <section class="main-section" id="Common Terminology">
+        <hr>
+        <section class="main-section" id="Common_Terminology">
             <header>Common Terminology</header>
             <ul>
                 <li><strong>Provider</strong> (in ethers) is a class which provides an abstraction for a connection to the Ethereum Network. It provides read-only access to the Blockchain and its status.</li>
@@ -81,8 +81,8 @@
                 <li><strong>Contract</strong> is an abstraction which represents a connection to a specific contract on the Ethereum Network, so that applications can use it like a normal JavaScript object.</li>
             </ul>
         </section>
-
-        <section class="main-section" id="Connecting to Ethereum: Metamask">
+        <hr>
+        <section class="main-section" id="Connecting_to_Ethereum:_Metamask">
             <header>Connecting to Ethereum: Metamask</header>
             <p>The quickest and easiest way to experiment and begin developing on Ethereum is to use MetaMask, which is a browser extension that provides:</p>
             <ul class="with-style">
@@ -105,8 +105,8 @@
                 const signer = provider.getSigner()<br>
             </code>
         </section>
-
-        <section class="main-section" id="Connecting to Ethereum: RPC">
+        <hr>
+        <section class="main-section" id="Connecting_to_Ethereum:_RPC">
             <header>Connecting to Ethereum: RPC</header>
             <p>The JSON-RPC API is another popular method for interacting with Ethereum and is available in all major Ethereum node implementations (e.g. Geth and Parity) as well as many third-party web services (e.g. INFURA). It typically provides:</p>
             <ul class="with-style">
@@ -125,7 +125,7 @@
                 const signer = provider.getSigner()<br>
             </code>
 
-            <article>
+            <div>
                 <h1>Querying the Blockchain</h1>
                 <p>Once you have a Provider, you have a read-only connection to the blockchain, which you can use to query the current state, fetch historic logs, look up deployed code and so on.</p>
                 <p class="code-label">Basic Queries</p>
@@ -158,33 +158,85 @@
                         <span class="tab">value: ethers.utils.parseEther("1.0")</span><br>
                     });<br>
                 </code>
-            </article>
-
+            </div>
+        <hr>
         </section>
         <section class="main-section" id="Contracts">
             <header>Contracts</header>
+            <p>A Contract is an abstraction of program code which lives on the Ethereum blockchain.  The Contract object makes it easier to use an on-chain Contract as a normal JavaScript object, with the methods mapped to encoding and decoding data for you.  If you are familiar with Databases, this is similar to an Object Relational Mapper (ORM).<br><br>
+                
+                In order to communicate with the Contract on-chain, this class needs to know what methods are available and how to encode and decode the data, which is what the Application Binary Interface (ABI) provides.  This class is a meta-class, which means its methods are constructed at runtime, and when you pass in the ABI to the constructor it uses it to determine which methods to add.<br><br>
+                
+                While an on-chain Contract may have many methods available, you can safely ignore any methods you don't need or use, providing a smaller subset of the ABI to the contract.  An ABI often comes from the Solidity or Vyper compiler, but you can use the Human-Readable ABI in code, which the following examples use.</p>
+            
+            <p class="code-label">Connecting to the DAI Contract</p>
+            <code>
+                // You can also use an ENS name for the contract address<br>
+                const daiAddress = "dai.tokens.ethers.eth";<br><br>
+
+                // The ERC-20 Contract ABI, which is a common contract interface<br>
+                // for tokens (this is the Human-Readable ABI format)<br>
+                const daiAbi = [<br>
+                <span class="tab">// Some details about the token</span><br>
+                <span class="tab">"function name() view returns (string)",</span><br>
+                <span class="tab">"function symbol() view returns (string)",</span><br>
+
+                <span class="tab">// Get the account balance</span><br>
+                <span class="tab">"function balanceOf(address) view returns (uint)",</span><br>
+
+                <span class="tab">// Send some of your tokens to someone else</span><br>
+                <span class="tab">"function transfer(address to, uint amount)",</span><br>
+
+                <span class="tab">// An event triggered whenever anyone transfers to someone else</span><br>
+                <span class="tab">"event Transfer(address indexed from, address indexed to, uint amount)"</span>
+                ];<br><br>
+
+                // The Contract object<br>
+                const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
+            </code>
+
+            <h1>Read-Only Methods</h1>
+            <p class="code-label">Querying the DAI Contract</p>
+            <code>
+                // Get the ERC-20 token name<br>
+                await daiContract.name()<br>
+                // 'Dai Stablecoin'<br><br>
+
+                // Get the ERC-20 token symbol (for tickers and UIs)<br>
+                await daiContract.symbol()<br>
+                // 'DAI'<br><br>
+
+                // Get the balance of an address<br>
+                balance = await daiContract.balanceOf("ricmoo.firefly.eth")<br>
+                // { BigNumber: "3118000455884268201631" }<br><br>
+
+                // Format the DAI for displaying to the user<br>
+                ethers.utils.formatUnits(balance, 18)<br>
+                // '3118.000455884268201631'
+            </code>
+
+            <h1>State Changing Methods</h1>
+            <p class="code-label">Sending DAI</p>
+            <code>
+                // The DAI Contract is currently connected to the Provider,<br>
+                // which is read-only. You need to connect to a Signer, so<br>
+                // that you can pay to send state-changing transactions.<br>
+                const daiWithSigner = contract.connect(signer);<br><br>
+
+                // Each DAI has 18 decimal places<br>
+                const dai = ethers.utils.parseUnits("1.0", 18);<br><br>
+
+                // Send 1 DAI to "ricmoo.firefly.eth"<br>
+                tx = daiWithSigner.transfer("ricmoo.firefly.eth", dai);
+            </code>
+
         </section>
-        <section class="main-section" id="Signing Messages">
+        <hr>
+        <section class="main-section" id="Signing_Messages">
             <header>Signing Messages</header>
         </section>
         
-        <section class="main-section">
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <code></code>
-            <code></code>
-            <code></code>
-            <code></code>
-            <code></code>
-        </section>
+
     </main>
 </body>
 </html>
