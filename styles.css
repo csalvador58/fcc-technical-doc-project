@@ -16,6 +16,10 @@ code {
     border-radius: 5px;
 }
 
+hr {
+    margin: 2rem 0;
+}
+
 img {
     width: 80px
 }
@@ -26,7 +30,6 @@ li {
 
 ul {
     list-style-type: none;
-    
 }
 
 ul.with-style {
@@ -38,11 +41,17 @@ ul.with-style {
     text-align: center;
 }
 
+.code-wrap {
+    margin: 1rem 0;
+}
+
 .main-section header{
-    font-size: x-large;
+    font-size: 40px;
     font-weight: bold;
     margin: 0;
-    padding: 20px 0;
+    padding: 0;
+    color: midnightblue;
+
 }
 
 .tab { 
@@ -56,9 +65,14 @@ ul.with-style {
 }
 
 #navbar {
+    background: linear-gradient(
+      midnightblue 50%,
+      black
+    );
     padding: 10px;
-    background-color:midnightblue;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     overflow: auto;
     width: 300px;
     border-radius: 5px;
@@ -69,13 +83,26 @@ ul.with-style {
 
 }
 
-#navbar a {
+#navbar .nav-link {
     text-decoration: none;
     color: whitesmoke;
 }
 
 #nav-header {
+    margin: 20px 0;
     font-size: x-large;
+    color: whitesmoke;
+}
+
+#nav-items {
+    height: 100vh;
+}
+
+#nav-footer, a:not(.nav-link)  {
+    height: 20px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 10px;
     color: whitesmoke;
 }
 
