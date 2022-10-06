@@ -2,6 +2,20 @@ body {
     display: flex;
 }
 
+code {
+    display: block;
+    text-align: left;
+    white-space: pre-line;
+    position: relative;
+    word-break: normal;
+    word-wrap:  break-word;
+    line-height: 2;
+    background-color: #f7f7f7;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
 img {
     width: 80px
 }
@@ -35,15 +49,24 @@ ul.with-style {
     margin-left: 40px; 
 }
 #main-doc {
-    padding: 20px;
+    margin: 0;
+    padding-left: 350px;
+    width: 800px;
+    
 }
 
 #navbar {
+    padding: 10px;
     background-color:midnightblue;
     display: block;
-    height: 900px;
+    overflow: auto;
     width: 300px;
     border-radius: 5px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
 }
 
 #navbar a {
@@ -54,4 +77,18 @@ ul.with-style {
 #nav-header {
     font-size: x-large;
     color: whitesmoke;
+}
+
+@media only screen and (max-width: 900px) {
+    /* html {
+        background-color:aqua;
+    } */
+    #main-doc {
+        padding-left: 250px;
+    }
+
+    #navbar {
+        width: 200px;
+    }
+
 }

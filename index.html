@@ -50,26 +50,36 @@
             <header>Importing</header>
             <div>
                 <h1>Node.js</h1>
-                <p class="code-label">node.js require</p>
-                <code>const { ethers } = require("ethers");</code>
-                <p>ES6 or TypeScript</p>
-                <code>import { ethers } from "ethers";</code>
-
+                <div class="code-wrap">
+                    <p class="code-label">node.js require</p>
+                    <code>const { ethers } = require("ethers");</code>
+                </div>
+                <div class="code-wrap">
+                    <p class="code-label">ES6 or TypeScript</p>
+                    <code>import { ethers } from "ethers";</code>
+                </div>
+                
                 <h1>Web Browser</h1>
                 <p>It is generally better practice (for security reasons) to copy the ethers library to your own webserver and serve it yourself.  For quick demos or prototyping though, you can load it in your Web Applications from our CDN.
                 </p>
-                <p class="code-label">ES6 in the Browser</p>
-                <code>
-                    &lt;script type="module"&gt;
-                    import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js";
-                    // Your code here...
-                    &lt;/script&gt;
-                </code>
-                <p class="code-label">ES3 (UMD) in the Browser</p>
-                <code>
-                    &lt;script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
-        type="application/javascript"&gt;&lt;/script&gt;
-                </code>
+                
+                <div class="code-wrap">
+                    <p class="code-label">ES6 in the Browser</p>
+                    <code>
+                        &lt;script type="module"&gt;
+                        import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js";
+                        // Your code here...
+                        &lt;/script&gt;
+                    </code> 
+                </div>
+                
+                <div class="code-wrap"></div>
+                    <p class="code-label">ES3 (UMD) in the Browser</p>
+                    <code>
+                        &lt;script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" 
+                        <span class="tab">type="application/javascript"&gt;&lt;/script&gt;</span>
+                    </code>
+                </div>
             </div>
         </section>
         <hr>
@@ -90,20 +100,23 @@
                 <li>Holds your private key and can sign things (a Signer)</li>
             </ul>
 
-            <p class="code-label">Connecting to MetaMask</p>
-            <code>
-                // A Web3Provider wraps a standard Web3 provider, which is<br>
-                // what MetaMask injects as window.ethereum into each page<br>
-                const provider = new ethers.providers.Web3Provider(window.ethereum)<br><br>
+            <div class="code-wrap">
+               <p class="code-label">Connecting to MetaMask</p>
+                <code>
+                    // A Web3Provider wraps a standard Web3 provider, which is
+                    // what MetaMask injects as window.ethereum into each page
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
 
-                // MetaMask requires requesting permission to connect users accounts<br>
-                await provider.send("eth_requestAccounts", []);<br><br>
+                    // MetaMask requires requesting permission to connect users accounts
+                    await provider.send("eth_requestAccounts", []);
 
-                // The MetaMask plugin also allows signing transactions to<br>
-                // send ether and pay to change state within the blockchain.<br>
-                // For this, you need the account signer...<br>
-                const signer = provider.getSigner()<br>
-            </code>
+                    // The MetaMask plugin also allows signing transactions to
+                    // send ether and pay to change state within the blockchain.
+                    // For this, you need the account signer...
+                    const signer = provider.getSigner()
+                </code> 
+            </div>
+            
         </section>
         <hr>
         <section class="main-section" id="Connecting_to_Ethereum:_RPC">
@@ -113,127 +126,322 @@
                 <li>A connection to the Ethereum network (a Provider)</li>
                 <li>Holds your private key and can sign things (a Signer)</li>
             </ul>
-            <p class="code-label">Connecting to an RPC client</p>
-            <code>
-                // If you don't specify a //url//, Ethers connects to the default<br> 
-                // (i.e. ``http:/\/localhost:8545``)<br>
-                const provider = new ethers.providers.JsonRpcProvider();<br><br>
+            
+            <div class="code-wrap">
+                <p class="code-label">Connecting to an RPC client</p>
+                <code>
+                    // If you don't specify a //url//, Ethers connects to the default
+                    // (i.e. ``http:/\/localhost:8545``)
+                    const provider = new ethers.providers.JsonRpcProvider();
 
-                // The provider also allows signing transactions to<br>
-                // send ether and pay to change state within the blockchain.<br>
-                // For this, we need the account signer...<br>
-                const signer = provider.getSigner()<br>
-            </code>
+                    // The provider also allows signing transactions to
+                    // send ether and pay to change state within the blockchain.
+                    // For this, we need the account signer...
+                    const signer = provider.getSigner()
+                </code>
+            </div>
+            
 
             <div>
                 <h1>Querying the Blockchain</h1>
                 <p>Once you have a Provider, you have a read-only connection to the blockchain, which you can use to query the current state, fetch historic logs, look up deployed code and so on.</p>
-                <p class="code-label">Basic Queries</p>
-                <code>
-                    // Look up the current block number<br>
-                    await provider.getBlockNumber()<br>
-                    // 14983200<br><br>
+                
+                <div class="code-wrap">
+                    <p class="code-label">Basic Queries</p>
+                    <code>
+                        // Look up the current block number
+                        await provider.getBlockNumber()
+                        // 14983200
 
-                    // Get the balance of an account (by address or ENS name, if supported by network)<br>
-                    balance = await provider.getBalance("ethers.eth")<br>
-                    // { BigNumber: "182826475815887608" }<br><br>
+                        // Get the balance of an account (by address or ENS name, if supported by network)
+                        balance = await provider.getBalance("ethers.eth")
+                        // { BigNumber: "182826475815887608" }
 
-                    // Often you need to format the output to something more user-friendly,<br>
-                    // such as in ether (instead of wei)<br>
-                    ethers.utils.formatEther(balance)<br>
-                    // '0.182826475815887608'<br><br>
+                        // Often you need to format the output to something more user-friendly,
+                        // such as in ether (instead of wei)
+                        ethers.utils.formatEther(balance)
+                        // '0.182826475815887608'
 
-                    // If a user enters a string in an input field, you may need<br>
-                    // to convert it from ether (as a string) to wei (as a BigNumber)<br>
-                    ethers.utils.parseEther("1.0")<br>
-                    // { BigNumber: "1000000000000000000" }<br>
-                </code>
+                        // If a user enters a string in an input field, you may need
+                        // to convert it from ether (as a string) to wei (as a BigNumber)
+                        ethers.utils.parseEther("1.0")
+                        // { BigNumber: "1000000000000000000" }
+                    </code>
+                </div>
+                
 
                 <h1>Writing to the Blockchain</h1>
-                <p class="code-label">Sending Ether</p>
-                <code>
-                    // Send 1 ether to an ens name.<br>
-                    const tx = signer.sendTransaction({<br>
-                        <span class="tab">to: "ricmoo.firefly.eth",</span><br>
-                        <span class="tab">value: ethers.utils.parseEther("1.0")</span><br>
-                    });<br>
-                </code>
+                
+                <div class="code-wrap">
+                    <p class="code-label">Sending Ether</p>
+                    <code>
+                        // Send 1 ether to an ens name.
+                        const tx = signer.sendTransaction({
+                            <span class="tab">to: "ricmoo.firefly.eth",</span>
+                            <span class="tab">value: ethers.utils.parseEther("1.0")</span>
+                        });
+                    </code>
+                </div>
+                
             </div>
         <hr>
         </section>
         <section class="main-section" id="Contracts">
             <header>Contracts</header>
-            <p>A Contract is an abstraction of program code which lives on the Ethereum blockchain.  The Contract object makes it easier to use an on-chain Contract as a normal JavaScript object, with the methods mapped to encoding and decoding data for you.  If you are familiar with Databases, this is similar to an Object Relational Mapper (ORM).<br><br>
+            <p>A Contract is an abstraction of program code which lives on the Ethereum blockchain.  The Contract object makes it easier to use an on-chain Contract as a normal JavaScript object, with the methods mapped to encoding and decoding data for you.  If you are familiar with Databases, this is similar to an Object Relational Mapper (ORM).
                 
-                In order to communicate with the Contract on-chain, this class needs to know what methods are available and how to encode and decode the data, which is what the Application Binary Interface (ABI) provides.  This class is a meta-class, which means its methods are constructed at runtime, and when you pass in the ABI to the constructor it uses it to determine which methods to add.<br><br>
+                In order to communicate with the Contract on-chain, this class needs to know what methods are available and how to encode and decode the data, which is what the Application Binary Interface (ABI) provides.  This class is a meta-class, which means its methods are constructed at runtime, and when you pass in the ABI to the constructor it uses it to determine which methods to add.
                 
-                While an on-chain Contract may have many methods available, you can safely ignore any methods you don't need or use, providing a smaller subset of the ABI to the contract.  An ABI often comes from the Solidity or Vyper compiler, but you can use the Human-Readable ABI in code, which the following examples use.</p>
+                While an on-chain Contract may have many methods available, you can safely ignore any methods you don't need or use, providing a smaller subset of the ABI to the contract.  An ABI often comes from the Solidity or Vyper compiler, but you can use the Human-Readable ABI in code, which the following examples use.
+            </p>
             
-            <p class="code-label">Connecting to the DAI Contract</p>
-            <code>
-                // You can also use an ENS name for the contract address<br>
-                const daiAddress = "dai.tokens.ethers.eth";<br><br>
+            <div class="code-wrap">
+                <p class="code-label">Connecting to the DAI Contract</p>
+                <code>
+                    // You can also use an ENS name for the contract address
+                    const daiAddress = "dai.tokens.ethers.eth";
 
-                // The ERC-20 Contract ABI, which is a common contract interface<br>
-                // for tokens (this is the Human-Readable ABI format)<br>
-                const daiAbi = [<br>
-                <span class="tab">// Some details about the token</span><br>
-                <span class="tab">"function name() view returns (string)",</span><br>
-                <span class="tab">"function symbol() view returns (string)",</span><br>
+                    // The ERC-20 Contract ABI, which is a common contract interface
+                    // for tokens (this is the Human-Readable ABI format)
+                    const daiAbi = [
+                    <span class="tab">// Some details about the token</span>
+                    <span class="tab">"function name() view returns (string)",</span>
+                    <span class="tab">"function symbol() view returns (string)",</span>
 
-                <span class="tab">// Get the account balance</span><br>
-                <span class="tab">"function balanceOf(address) view returns (uint)",</span><br>
+                    <span class="tab">// Get the account balance</span>
+                    <span class="tab">"function balanceOf(address) view returns (uint)",</span>
 
-                <span class="tab">// Send some of your tokens to someone else</span><br>
-                <span class="tab">"function transfer(address to, uint amount)",</span><br>
+                    <span class="tab">// Send some of your tokens to someone else</span>
+                    <span class="tab">"function transfer(address to, uint amount)",</span>
 
-                <span class="tab">// An event triggered whenever anyone transfers to someone else</span><br>
-                <span class="tab">"event Transfer(address indexed from, address indexed to, uint amount)"</span>
-                ];<br><br>
+                    <span class="tab">// An event triggered whenever anyone transfers to someone else</span>
+                    <span class="tab">"event Transfer(address indexed from, address indexed to, uint amount)"</span>
+                    ];<br><br>
 
-                // The Contract object<br>
-                const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
-            </code>
+                    // The Contract object<br>
+                    const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
+                </code>
+            </div>
+            
 
             <h1>Read-Only Methods</h1>
-            <p class="code-label">Querying the DAI Contract</p>
-            <code>
-                // Get the ERC-20 token name<br>
-                await daiContract.name()<br>
-                // 'Dai Stablecoin'<br><br>
+            
+            <div class="code-wrap">
+                <p class="code-label">Querying the DAI Contract</p>
+                <code>
+                    // Get the ERC-20 token name<br>
+                    await daiContract.name()<br>
+                    // 'Dai Stablecoin'<br><br>
 
-                // Get the ERC-20 token symbol (for tickers and UIs)<br>
-                await daiContract.symbol()<br>
-                // 'DAI'<br><br>
+                    // Get the ERC-20 token symbol (for tickers and UIs)<br>
+                    await daiContract.symbol()<br>
+                    // 'DAI'<br><br>
 
-                // Get the balance of an address<br>
-                balance = await daiContract.balanceOf("ricmoo.firefly.eth")<br>
-                // { BigNumber: "3118000455884268201631" }<br><br>
+                    // Get the balance of an address<br>
+                    balance = await daiContract.balanceOf("ricmoo.firefly.eth")<br>
+                    // { BigNumber: "3118000455884268201631" }<br><br>
 
-                // Format the DAI for displaying to the user<br>
-                ethers.utils.formatUnits(balance, 18)<br>
-                // '3118.000455884268201631'
-            </code>
+                    // Format the DAI for displaying to the user<br>
+                    ethers.utils.formatUnits(balance, 18)<br>
+                    // '3118.000455884268201631'
+                </code>
+            </div>
+            
 
             <h1>State Changing Methods</h1>
-            <p class="code-label">Sending DAI</p>
-            <code>
-                // The DAI Contract is currently connected to the Provider,<br>
-                // which is read-only. You need to connect to a Signer, so<br>
-                // that you can pay to send state-changing transactions.<br>
-                const daiWithSigner = contract.connect(signer);<br><br>
+            
+            <div class="code-wrap">
+                <p class="code-label">Sending DAI</p>
+                <code>
+                    // The DAI Contract is currently connected to the Provider,<br>
+                    // which is read-only. You need to connect to a Signer, so<br>
+                    // that you can pay to send state-changing transactions.<br>
+                    const daiWithSigner = contract.connect(signer);<br><br>
 
-                // Each DAI has 18 decimal places<br>
-                const dai = ethers.utils.parseUnits("1.0", 18);<br><br>
+                    // Each DAI has 18 decimal places<br>
+                    const dai = ethers.utils.parseUnits("1.0", 18);<br><br>
 
-                // Send 1 DAI to "ricmoo.firefly.eth"<br>
-                tx = daiWithSigner.transfer("ricmoo.firefly.eth", dai);
-            </code>
+                    // Send 1 DAI to "ricmoo.firefly.eth"<br>
+                    tx = daiWithSigner.transfer("ricmoo.firefly.eth", dai);
+                </code> 
+            </div>
+            
+            <h1>Listening to Events</h1>
+            
+            <div class="code-wrap">
+                <p class="code-label">Listening to Events</p>
+                <code>
+                    // Receive an event when ANY transfer occurs<br>
+                    daiContract.on("Transfer", (from, to, amount, event) => {<br>
+                    <span class="tab">console.log(`${ from } sent ${ formatEther(amount) } to ${ to}`);</span><br>
+                    <span class="tab">// The event object contains the verbatim log data, the</span><br>
+                    <span class="tab">// EventFragment and functions to fetch the block,</span><br>
+                    <span class="tab">// transaction and receipt and event functions</span><br>
+                    });<br><br>
+
+                    // A filter for when a specific address receives tokens<br>
+                    myAddress = "0x8ba1f109551bD432803012645Ac136ddd64DBA72";<br>
+                    filter = daiContract.filters.Transfer(null, myAddress)<br>
+                    // {<br>
+                    //   address: 'dai.tokens.ethers.eth',<br>
+                    //   topics: [<br>
+                    //     '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',<br>
+                    //     null,<br>
+                    //     '0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72'<br>
+                    //   ]<br>
+                    // }<br><br>
+
+                    // Receive an event when that filter occurs<br>
+                    daiContract.on(filter, (from, to, amount, event) => {<br>
+                        <span class="tab">// The to will always be "address"</span><br>
+                        <span class="tab">console.log(`I got ${ formatEther(amount) } from ${ from }.`);</span><br>
+                    });<br>
+                </code>
+            </div>
+            
+
+            <h1>Query Historic Events</h1>
+            
+            <div class="code-wrap">
+                <p class="code-label">Filtering Historic Events</p>
+                <code>
+                    // Get the address of the Signer<br>
+                    myAddress = await signer.getAddress()<br>
+                    // '0x8ba1f109551bD432803012645Ac136ddd64DBA72'<br><br>
+
+                    // Filter for all token transfers from me<br>
+                    filterFrom = daiContract.filters.Transfer(myAddress, null);<br>
+                    // {<br>
+                    //   address: 'dai.tokens.ethers.eth',<br>
+                    //   topics: [<br>
+                    //     '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',<br>
+                    //     '0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72'<br>
+                    //   ]<br>
+                    // }<br><br>
+
+                    // Filter for all token transfers to me<br>
+                    filterTo = daiContract.filters.Transfer(null, myAddress);<br>
+                    // {<br>
+                    //   address: 'dai.tokens.ethers.eth',<br>
+                    //   topics: [<br>
+                    //     '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',<br>
+                    //     null,<br>
+                    //     '0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72'<br>
+                    //   ]<br>
+                    // }<br>
+
+                    // List all transfers sent from me in a specific block range<br>
+                    await daiContract.queryFilter(filterFrom, 9843470, 9843480)<br>
+                    // [<br>
+                    //   {<br>
+                    //     address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',<br>
+                    //     args: [<br>
+                    //       '0x8ba1f109551bD432803012645Ac136ddd64DBA72',<br>
+                    //       '0x8B3765eDA5207fB21690874B722ae276B96260E0',<br>
+                    //       { BigNumber: "4750000000000000000" },<br>
+                    //       amount: { BigNumber: "4750000000000000000" },<br>
+                    //       from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',<br>
+                    //       to: '0x8B3765eDA5207fB21690874B722ae276B96260E0'<br>
+                    //     ],<br>
+                    //     blockHash: '0x8462eb2fbcef5aa4861266f59ad5f47b9aa6525d767d713920fdbdfb6b0c0b78',<br>
+                    //     blockNumber: 9843476,<br>
+                    //     data: '0x00000000000000000000000000000000000000000000000041eb63d55b1b0000',<br>
+                    //     decode: [Function],<br>
+                    //     event: 'Transfer',<br>
+                    //     eventSignature: 'Transfer(address,address,uint256)',<br>
+                    //     getBlock: [Function],<br>
+                    //     getTransaction: [Function],<br>
+                    //     getTransactionReceipt: [Function],<br>
+                    //     logIndex: 69,<br>
+                    //     removeListener: [Function],<br>
+                    //     removed: false,<br>
+                    //     topics: [<br>
+                    //       '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',<br>
+                    //       '0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72',<br>
+                    //       '0x0000000000000000000000008b3765eda5207fb21690874b722ae276b96260e0'<br>
+                    //     ],<br>
+                    //     transactionHash: '0x1be23554545030e1ce47391a41098a46ff426382ed740db62d63d7676ff6fcf1',<br>
+                    //     transactionIndex: 81<br>
+                    //   },<br>
+                    //   {<br>
+                    //     address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',<br>
+                    //     args: [<br>
+                    //       '0x8ba1f109551bD432803012645Ac136ddd64DBA72',<br>
+                    //       '0x00De4B13153673BCAE2616b67bf822500d325Fc3',<br>
+                    //       { BigNumber: "250000000000000000" },<br>
+                    //       amount: { BigNumber: "250000000000000000" },<br>
+                    //       from: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',<br>
+                    //       to: '0x00De4B13153673BCAE2616b67bf822500d325Fc3'<br>
+                    //     ],<br>
+                    //     blockHash: '0x8462eb2fbcef5aa4861266f59ad5f47b9aa6525d767d713920fdbdfb6b0c0b78',<br>
+                    //     blockNumber: 9843476,<br>
+                    //     data: '0x00000000000000000000000000000000000000000000000003782dace9d90000',<br>
+                    //     decode: [Function],<br>
+                    //     event: 'Transfer',<br>
+                    //     eventSignature: 'Transfer(address,address,uint256)',<br>
+                    //     getBlock: [Function],<br>
+                    //     getTransaction: [Function],<br>
+                    //     getTransactionReceipt: [Function],<br>
+                    //     logIndex: 70,<br>
+                    //     removeListener: [Function],<br>
+                    //     removed: false,<br>
+                    //     topics: [<br>
+                    //       '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',<br>
+                    //       '0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72',<br>
+                    //       '0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3'<br>
+                    //     ],<br>
+                    //     transactionHash: '0x1be23554545030e1ce47391a41098a46ff426382ed740db62d63d7676ff6fcf1',<br>
+                    //     transactionIndex: 81<br>
+                    //   }<br>
+                    // ]<br><br>
+
+                    //<br>
+                    // The following have had the results omitted due to the<br>
+                    // number of entries; but they provide some useful examples<br>
+                    //<br><br>
+
+                    // List all transfers sent in the last 10,000 blocks<br>
+                    await daiContract.queryFilter(filterFrom, -10000)<br><br>
+
+                    // List all transfers ever sent to me<br>
+                    await daiContract.queryFilter(filterTo)
+                </code>
+            </div>
+            
 
         </section>
         <hr>
         <section class="main-section" id="Signing_Messages">
             <header>Signing Messages</header>
+            
+            <div class="code-wrap">
+                <p class="code-label">Signing Messages</p>
+                <code>
+                    // To sign a simple string, which are used for<br>
+                    // logging into a service, such as CryptoKitties,<br>
+                    // pass the string in.<br>
+                    signature = await signer.signMessage("Hello World");<br>
+                    // '0xfd4a2aef568db7193a3c0b3b3cc305fbb397d0264654a848f6c74edb7dba260e75af6aadf980519619475272b85854d25e8bed1ca8c5f72ffd9251244aca002e1b'<br><br>
+
+                    //<br>
+                    // A common case is also signing a hash, which is 32<br>
+                    // bytes. It is important to note, that to sign binary<br>
+                    // data it MUST be an Array (or TypedArray)<br>
+                    //<br><br>
+
+                    // This string is 66 characters long<br>
+                    message = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"<br><br>
+
+                    // This array representation is 32 bytes long<br>
+                    messageBytes = ethers.utils.arrayify(message);<br>
+                    // Uint8Array [ 221, 242, 82, 173, 27, 226, 200, 155, 105, 194, 176, 104, 252, 55, 141, 170, 149, 43, 167, 241, 99, 196, 161, 22, 40, 245, 90, 77, 245, 35, 179, 239 ]<br><br>
+
+                    // To sign a hash, you most often want to sign the bytes<br>
+                    signature = await signer.signMessage(messageBytes)<br>
+                    // '0xe7d007d76970a411c8ff54e9f3b8ed03b2c6f129f7bb5a236c5c04a365da419c7dbe4f37760df6424d1514dc53762eed2baae7ab347020265e9c2e5f3d3b521d1c'
+                </code>
+            </div>
+            
         </section>
         
 
